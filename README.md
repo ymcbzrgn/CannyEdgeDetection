@@ -48,31 +48,31 @@ This will open the Tkinter application. From there, you can use the "Choose Imag
 
 ## Algorithm Steps
 
-In this implementation of the Canny Edge Detection algorithm, I've followed several key steps:
+In this implementation of the Canny Edge Detection algorithm, I have followed several key steps to achieve accurate edge detection:
 
-1. **Gaussian Blur:** The first step in the process is to reduce noise in the image, which I've achieved by convolving the image with a Gaussian function. This 'blurring' effect is controlled by the 'blur_ratio' parameter in the code, which determines the size of the Gaussian kernel. The Gaussian function is given by:
+1. **Gaussian Blur:** The initial step involves reducing noise in the image by convolving it with a Gaussian function. This blurring effect, controlled by the 'blur_ratio' parameter in the code, is essential for suppressing high-frequency noise and preparing the image for edge detection. The Gaussian function can be expressed as:
 
-    $$ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} $$
+   \[ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} \]
 
-    where \( \mu \) is the mean (center of the Gaussian), and \( \sigma \) is the standard deviation (width of the Gaussian).
+   Here, \( \mu \) represents the mean (the center of the Gaussian) and \( \sigma \) denotes the standard deviation (the width of the Gaussian).
 
-2. **Gradient Calculation:** Next, I've used the Sobel operator to compute the gradient magnitude and direction at each pixel in the image. This is a crucial step in edge detection, as it allows us to identify areas of the image where the intensity changes significantly. The gradient magnitude is calculated as the Euclidean norm of the gradient components:
+2. **Gradient Calculation:** Following the Gaussian blur, the Sobel operator is employed to calculate the gradient magnitude and direction at each pixel in the image. This step plays a crucial role in edge detection as it allows the identification of regions with significant intensity changes. The gradient magnitude (\( G \)) is computed using the Euclidean norm of the gradient components:
 
-    $$ G = \sqrt{G_x^2 + G_y^2} $$
+   \[ G = \sqrt{G_x^2 + G_y^2} \]
 
-    and the direction is calculated as the arctangent of the ratio of the gradient components:
+   Additionally, the gradient direction (\( \theta \)) is determined as the arctangent of the ratio between the y and x gradient components:
 
-    $$ \theta = \arctan\left(\frac{G_y}{G_x}\right) $$
+   \[ \theta = \arctan\left(\frac{G_y}{G_x}\right) \]
 
-    where \( G_x \) and \( G_y \) are the gradients in the x and y directions, respectively.
+   Here, \( G_x \) and \( G_y \) represent the gradients in the x and y directions, respectively.
 
-3. **Non-maximum Suppression:** After calculating the gradient, I've applied a technique called non-maximum suppression to thin the edges. This involves scanning the image and suppressing any pixel value that is not considered to be an edge.
+3. **Non-maximum Suppression:** After obtaining the gradient magnitude and direction, a technique called non-maximum suppression is applied to thin the edges. This process involves scanning the image and suppressing any pixel that is not considered an edge. Only local maxima along the gradient direction are preserved, enhancing the accuracy of edge detection.
 
-4. **Double Thresholding:** This step involves determining which edges are 'true' edges. I've set two threshold values, and any pixel with an edge intensity higher than the upper threshold is considered a strong edge, while any pixel with an edge intensity lower than the lower threshold is discarded. Pixels with edge intensities between the two thresholds are considered weak edges.
+4. **Double Thresholding:** To determine the 'true' edges, a double thresholding technique is employed. Two threshold values, an upper threshold and a lower threshold, are set. Pixels with edge intensities above the upper threshold are identified as strong edges, while those below the lower threshold are discarded. Pixels with edge intensities between the two thresholds are labeled as weak edges.
 
-5. **Edge Tracking by Hysteresis:** Finally, I've used a technique called edge tracking by hysteresis to track along the remaining pixels that have not been suppressed. If a weak edge pixel is connected to a strong edge pixel, it is considered to be part of an edge. Otherwise, the weak edge is removed.
+5. **Edge Tracking by Hysteresis:** The final step involves edge tracking by hysteresis. This technique aims to connect the weak edges that remain after thresholding to the strong edges, effectively completing the edges and suppressing any remaining noise. If a weak edge pixel is connected to a strong edge pixel, it is considered part of an edge; otherwise, it is removed.
 
-These steps form the core of the Canny Edge Detection algorithm and are the basis for the edge detection capabilities of this application.
+These steps collectively form the core of the Canny Edge Detection algorithm and serve as the foundation for the edge detection capabilities of this application.
 
 ## Contributing
 
